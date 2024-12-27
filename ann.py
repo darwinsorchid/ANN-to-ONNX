@@ -38,12 +38,11 @@ x_train = sc.fit_transform(x_train)
 x_test = sc.transform(x_test)
 
 # Initialize ANN - basic fully connected neural network
-model = tf.keras.models.Sequential()
-
-# Add layers
-model.add(tf.keras.layers.Dense(6, activation = 'relu'))
-model.add(tf.keras.layers.Dense(6, activation = 'relu'))
-model.add(tf.keras.layers.Dense(1, activation = 'sigmoid'))
+model = tf.keras.models.Sequential([
+    tf.keras.layers.Dense(6, activation = 'relu'),
+    tf.keras.layers.Dense(6, activation = 'relu'),
+    tf.keras.layers.Dense(1, activation = 'sigmoid')
+])
 
 # Compile model 
 model.compile(optimizer = 'adam', # Stochastic Gradient Descent 
@@ -69,3 +68,9 @@ y_pred = (y_pred > 0.5) # will be equal to 0 if under 0.5 else 1
 cm = confusion_matrix(y_test, y_pred)
 print(cm)
 print(accuracy_score(y_test, y_pred))
+
+# Save model
+model_path = 'saved_model.h5'
+model.save(model_path)
+print(f"Model saved to {model_path}")
+
