@@ -43,40 +43,42 @@ sc = StandardScaler()
 x_train = sc.fit_transform(x_train)
 x_test = sc.transform(x_test)
 
-# Initialize ANN - basic fully connected neural network
-model = tf.keras.models.Sequential([
-    tf.keras.layers.Dense(6, activation = 'relu'),
-    tf.keras.layers.Dense(6, activation = 'relu'),
-    tf.keras.layers.Dense(1, activation = 'sigmoid')
-])
+if __name__ == "__main__":
 
-# Compile model 
-model.compile(optimizer = 'adam', # Stochastic Gradient Descent 
-              loss = 'binary_crossentropy', # Binary classification / For non-binary classification: 'categorical_crossentropy' + softmax activation function
-              metrics = ['accuracy'])
+    # Initialize ANN - basic fully connected neural network
+    model = tf.keras.models.Sequential([
+        tf.keras.layers.Dense(6, activation = 'relu'),
+        tf.keras.layers.Dense(6, activation = 'relu'),
+        tf.keras.layers.Dense(1, activation = 'sigmoid')
+    ])
 
-# Train model and specify hyperparameters
-model.fit(x_train, y_train, batch_size = 32, epochs = 100)
+    # Compile model 
+    model.compile(optimizer = 'adam', # Stochastic Gradient Descent 
+                loss = 'binary_crossentropy', # Binary classification / For non-binary classification: 'categorical_crossentropy' + softmax activation function
+                metrics = ['accuracy'])
 
-# Use model for prediction - always 2D array expected by predict method
-# False: client will most probably not leave 
-# True: client will most probably leave
-print(model.predict(sc.transform([[1, 0, 0, 600, 1, 40, 3, 60000, 2, 1, 1, 50000]])) > 0.5)
+    # Train model and specify hyperparameters
+    model.fit(x_train, y_train, batch_size = 32, epochs = 100)
 
-# Use model to make predictions on the test set
-y_pred = model.predict(x_test)
-y_pred = (y_pred > 0.5) # will be equal to 0 if under 0.5 else 1
+    # Use model for prediction - always 2D array expected by predict method
+    # False: client will most probably not leave 
+    # True: client will most probably leave
+    print(model.predict(sc.transform([[1, 0, 0, 600, 1, 40, 3, 60000, 2, 1, 1, 50000]])) > 0.5)
 
-# Vertically concatenate predicted vs real value vectors
-# print(np.concatenate((y_pred.reshape(len(y_pred), 1), (y_test.reshape(len(y_test), 1)), 1)))
+    # Use model to make predictions on the test set
+    y_pred = model.predict(x_test)
+    y_pred = (y_pred > 0.5) # will be equal to 0 if under 0.5 else 1
 
-# Confusion Matrix - visualize model accuracy
-cm = confusion_matrix(y_test, y_pred)
-print(cm)
-print(accuracy_score(y_test, y_pred))
+    # Vertically concatenate predicted vs real value vectors
+    # print(np.concatenate((y_pred.reshape(len(y_pred), 1), (y_test.reshape(len(y_test), 1)), 1)))
 
-# Save model
-model_path = 'saved_model'
-tf.saved_model.save(model, model_path)
-print(f"Model saved to {model_path}")
+    # Confusion Matrix - visualize model accuracy
+    cm = confusion_matrix(y_test, y_pred)
+    print(cm)
+    print(accuracy_score(y_test, y_pred))
+
+    # Save model
+    model_path = 'saved_model'
+    tf.saved_model.save(model, model_path)
+    print(f"Model saved to {model_path}")
 
