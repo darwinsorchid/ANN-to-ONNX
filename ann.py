@@ -70,7 +70,7 @@ print(cm)
 print(accuracy_score(y_test, y_pred))
 
 # Save model
-model_path = 'saved_model.h5'
-model.save(model_path)
+model_path = 'saved_model'
+tf.saved_model.save(model, model_path)
 print(f"Model saved to {model_path}")
 
