@@ -1,3 +1,9 @@
+'''
+@File_name: 'ann.py'
+@Author: Alexandra Bekou
+@Date created: 23-12-24 11:43am
+@Description: Build and train an ANN model that predicts the possibility of a bank client leaving the bank depending on specific client's features.
+'''
 # Import libraries
 import pandas as pd
 import tensorflow as tf
