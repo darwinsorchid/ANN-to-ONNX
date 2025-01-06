@@ -2,7 +2,7 @@
 @File_name: 'explore_onnx.py'
 @Author: Alexandra Bekou
 @Date created: 31-12-24 03:07pm
-@Description: Explore ONNX architecture of model.onnx
+@Description: Explore ONNX architecture of an onnx model with netron
 '''
 # Import libraries
 import onnx

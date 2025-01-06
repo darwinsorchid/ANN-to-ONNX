@@ -1,7 +1,11 @@
 # Export TensorFlow ANN to ONNX format
 
 ## Description
-Use `tf2onnx` library to convert a simple ANN model to ONNX format.
+> Use `tf2onnx` library to convert a simple ANN model to ONNX format. 
+
+> Download models from [ONNX Model Zoo](https://onnx.ai/models/).
+
+> Visualize ONNX models architecture with `netron`.
 
 ## Dependencies
 - `Python 10.0`
