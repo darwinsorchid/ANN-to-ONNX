@@ -17,15 +17,16 @@ onnx.checker.check_model(model)
 # Print the entire model structure
 print(onnx.helper.printable_graph(model.graph))
 
-# Detailed model structure breakdown
-for node in model.graph.node:
-    print(f"Node Name: {node.name}")
-    print(f"Operation: {node.op_type}")
-    for input_name in node.input:
-        print(f"Input: {input_name}")
-    for output_name in node.output:
-        print(f"Output: {output_name}")
-    print("----")
+# Detailed model structure breakdown - write ONNX graph to txt file
+with open('Model_arch.txt', 'w') as file:
+
+    for node in model.graph.node:
+        file.write(f"Node Name: {node.name} \nOperation: {node.op_type}\n")
+        for input_name in node.input:
+            file.write(f"Input: {input_name}\n")
+        for output_name in node.output:
+            file.write(f"Output: {output_name}\n")
+        file.write("----\n")
 
 # Visualize ONNX model with Netron
 netron.start('model.onnx')

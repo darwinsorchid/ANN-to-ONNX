@@ -1,0 +1,51 @@
+Node Name: StatefulPartitionedCall/sequential/dense/MatMul  
+Operation: MatMul
+Input: dense_input
+Input: StatefulPartitionedCall/sequential/dense/MatMul/ReadVariableOp:0         - weight matrix 0
+Output: StatefulPartitionedCall/sequential/dense/MatMul:0                       - output A
+----
+Node Name: StatefulPartitionedCall/sequential/dense/BiasAdd 
+Operation: Add
+Input: StatefulPartitionedCall/sequential/dense/MatMul:0                        - output A
+Input: StatefulPartitionedCall/sequential/dense/BiasAdd/ReadVariableOp:0        - bias vector 0
+Output: StatefulPartitionedCall/sequential/dense/BiasAdd:0                      - output B
+----
+Node Name: StatefulPartitionedCall/sequential/dense/Relu 
+Operation: Relu
+Input: StatefulPartitionedCall/sequential/dense/BiasAdd:0                       - output B
+Output: StatefulPartitionedCall/sequential/dense/Relu:0                         - output C
+----
+Node Name: StatefulPartitionedCall/sequential/dense_1/MatMul 
+Operation: MatMul
+Input: StatefulPartitionedCall/sequential/dense/Relu:0                          - output C
+Input: StatefulPartitionedCall/sequential/dense_1/MatMul/ReadVariableOp:0       - weight matrix 1 
+Output: StatefulPartitionedCall/sequential/dense_1/MatMul:0                     - output D
+----
+Node Name: StatefulPartitionedCall/sequential/dense_1/BiasAdd
+Operation: Add                                                                  
+Input: StatefulPartitionedCall/sequential/dense_1/MatMul:0                      - output D
+Input: StatefulPartitionedCall/sequential/dense_1/BiasAdd/ReadVariableOp:0      - bias vector 1
+Output: StatefulPartitionedCall/sequential/dense_1/BiasAdd:0                    - output E
+----
+Node Name: StatefulPartitionedCall/sequential/dense_1/Relu 
+Operation: Relu
+Input: StatefulPartitionedCall/sequential/dense_1/BiasAdd:0                     - output E
+Output: StatefulPartitionedCall/sequential/dense_1/Relu:0                       - output F
+----
+Node Name: StatefulPartitionedCall/sequential/dense_2/MatMul 
+Operation: MatMul
+Input: StatefulPartitionedCall/sequential/dense_1/Relu:0                        - output F
+Input: StatefulPartitionedCall/sequential/dense_2/MatMul/ReadVariableOp:0       - weight matrix 2
+Output: StatefulPartitionedCall/sequential/dense_2/MatMul:0                     - output G
+----
+Node Name: StatefulPartitionedCall/sequential/dense_2/BiasAdd 
+Operation: Add
+Input: StatefulPartitionedCall/sequential/dense_2/MatMul:0                      - output G
+Input: StatefulPartitionedCall/sequential/dense_2/BiasAdd/ReadVariableOp:0      - bias vector 2
+Output: StatefulPartitionedCall/sequential/dense_2/BiasAdd:0                    - output H
+----
+Node Name: StatefulPartitionedCall/sequential/dense_2/Sigmoid                  
+Operation: Sigmoid
+Input: StatefulPartitionedCall/sequential/dense_2/BiasAdd:0                     - output H
+Output: dense_2                                                                 - FINAL MODEL OUTPUT
+----
