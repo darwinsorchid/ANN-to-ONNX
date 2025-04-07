@@ -12,4 +12,6 @@
 
 - `Tensorflow 2.15.0`
 
+- `ONNX 1.17.0`
+
 - After saving model in SavedModel format run `python -m tf2onnx.convert --saved-model saved_model --output model.onnx` in terminal.
